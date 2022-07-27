@@ -10,6 +10,8 @@ let package = Package(
         .library(
             name: "Accumulation",
             targets: ["Accumulation"]),
+        .library(name: "Extension",
+                 targets: ["AccumulationExtension"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -20,7 +22,11 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "Accumulation",
-            dependencies: []),
+            dependencies: [
+                "AccumulationExtension"
+            ]),
+        .target(name: "AccumulationExtension",
+                dependencies: []),
         .testTarget(
             name: "AccumulationTests",
             dependencies: ["Accumulation"]),
