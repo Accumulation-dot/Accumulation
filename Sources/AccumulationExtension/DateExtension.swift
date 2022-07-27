@@ -9,6 +9,9 @@ import Foundation
 
 public extension Date {
 
+    /// zero 1970/1/1
+    static let zero = Date(timeIntervalSince1970: .zero)
+
     /// 是否在同一天
     var isToday: Bool {
         Calendar.current.isDateInToday(self)
