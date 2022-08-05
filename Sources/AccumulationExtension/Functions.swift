@@ -10,6 +10,3 @@ public func value<T>(expected: @autoclosure () throws -> T, alternation: @autocl
     }
     return try expected()
 }
-
-/// 类型处理
-typealias TypeHandler<T> = (T) -> Void
