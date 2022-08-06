@@ -1,9 +1,7 @@
-//
-//  AccumulationExtension.swift
-//  
-//
-//  Created by Mario on 2022/7/27.
-//
+
+/// 添加一些常用的扩展方法
+/// 1. Foundation
+/// 2. CoreGraphics
 
 import Foundation
 

@@ -170,6 +170,4 @@ extension UICollectionView.Kind {
         }
     }
 }
-
-
 #endif
