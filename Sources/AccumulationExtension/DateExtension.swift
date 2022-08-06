@@ -50,4 +50,19 @@ public extension Date {
             component.value(for: $0) ?? .zero
         }
     }
+
+    /// 获取日期信息
+    func dateComponents(_ components: Set<Calendar.Component>) -> [Int] {
+        if components.isEmpty {
+            return []
+        }
+        let dateComponents = Calendar.current.dateComponents(components, from: self)
+        return components.map {
+            dateComponents.value(for: $0) ?? .zero
+        }
+    }
+
+    func weekdayComponents() -> Calendar.WeekDayEnum {
+        .init(rawValue: dateComponents([.weekday]).first ?? .zero) ?? .sunday
+    }
 }
