@@ -26,9 +26,6 @@ let package = Package(
                 "AccumulationExtension"
             ]),
         .target(name: "AccumulationExtension",
-                dependencies: []),
-        .testTarget(
-            name: "AccumulationTests",
-            dependencies: ["Accumulation"]),
+                dependencies: [])
     ]
 )

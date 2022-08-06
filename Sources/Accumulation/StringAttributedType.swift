@@ -7,11 +7,8 @@
 
 import Foundation
 
-#if os(macOS)
-import AppKit
-#else
+#if os(iOS)
 import UIKit
-#endif
 
 /// 连体属性类型
 public enum LigatureType: Int {
@@ -39,69 +36,85 @@ public enum WritingDirectionType: Int {
     case rlo = 3
 }
 
+/// 文字方向
+public enum VerticalGlyphFormType: Int {
+
+    /// 水平
+    case horizontal
+
+    /// 垂直
+    case vertical
+}
+
 public enum StringAttributedType {
 
-    /// 附加
-    case attachment(NSTextAlignment)
-
-    /// 背景色
-    case backgroundColor(AColor)
-
-    /// 设置基线偏移值
-    case baselineOffset(CGFloat)
-
-    /// 字体的横向拉伸
-    case expansion(CGFloat)
-
     /// 字体
-    case font(AFont)
-
-    /// 前景色
-    case foregroundColor(AColor)
-
-    /// 字距
-    case kern(CGFloat)
-
-    /// 连体属性
-    case ligature(LigatureType)
-
-    /// 链接
-    case link(NSURL)
-
-    /// 倾斜度
-    case obliqueness(CGFloat)
+    case font(UIFont)
 
     /// 段落
     case paragraphStyle(NSParagraphStyle)
 
-    /// 阴影
-    case shadow(NSShadow?)
+    /// 前景色
+    case foregroundColor(UIColor)
 
-    /// 删除线颜色
-    case strikethroughColor(AColor)
+    /// 背景色
+    case backgroundColor(UIColor)
+
+    /// 连体属性
+    case ligature(LigatureType)
+
+    /// 字距
+    case kern(CGFloat)
+
+    /// tracking
+    case tracking(CGFloat)
 
     /// 删除线样式
     case strikethroughStyle(NSUnderlineStyle)
 
+    /// 下划线样式
+    case underlineStyle(NSUnderlineStyle)
+
     /// 笔刷颜色
-    case strokeColor(AColor)
+    case strokeColor(UIColor)
 
     /// 笔画的宽度
     case strokeWidth(CGFloat)
 
+    /// 阴影
+    case shadow(NSShadow?)
+
     /// 字体特殊效果
     case textEffect(String?)
 
-    /// 下划线
-    case underlineColor(AColor)
+    /// 附加
+    case attachment(NSTextAlignment)
 
-    /// 下划线样式
-    case underlineStyle(NSUnderlineStyle)
+    /// 链接
+    case link(NSURL)
+
+    /// 设置基线偏移值
+    case baselineOffset(CGFloat)
+
+    /// 下划线
+    case underlineColor(UIColor)
+
+    /// 删除线颜色
+    case strikethroughColor(UIColor)
+
+    /// 倾斜度
+    case obliqueness(CGFloat)
+
+    /// 字体的横向拉伸
+    case expansion(CGFloat)
 
     /// 设置文字的书写方向
     case writingDirection([WritingDirectionType])
 
-    ///
+    /// verticalGlyphForm iOS 只支持0
+    case verticalGlyphForm(VerticalGlyphFormType)
+
+    /// 转换过程
     var value: [NSAttributedString.Key: Any] {
         switch self {
         case .attachment(let file):
@@ -150,6 +163,12 @@ public enum StringAttributedType {
             return [.underlineColor: color]
         case .underlineStyle(let style):
             return [.underlineStyle: style.rawValue]
+        case .verticalGlyphForm(let type):
+            return [.verticalGlyphForm: type.rawValue]
+        case .tracking(let tracking):
+            if #available(iOS 14.0, *) {
+                return [.tracking: tracking]
+            }
         }
         return [:]
     }
@@ -163,10 +182,11 @@ public extension String {
     /// - Returns: 富文本
     func attributedString(_ attributes: [StringAttributedType]) -> NSAttributedString {
         let result = attributes.reduce([:]) { x, y in
-            x.merging(y.value) { pre, suffix in
+            x.merging(y.value) { _, suffix in
                 suffix
             }
         }
         return NSAttributedString(string: self, attributes: result)
     }
 }
+#endif
