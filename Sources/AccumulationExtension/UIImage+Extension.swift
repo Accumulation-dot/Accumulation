@@ -142,7 +142,7 @@ public extension UIImage {
     ///   - quality: 质量
     /// - Returns: 缩放后图片
     func scale(_ rate: CGFloat, quality: CGInterpolationQuality = .default) -> UIImage {
-        let rate = size.rate(rate)
+        let rate = size.rated(rate)
         return UIGraphicsImageRenderer(size: rate).image { context in
             context.cgContext.interpolationQuality = quality
             self.draw(in: CGRect(origin: .zero, size: rate))
