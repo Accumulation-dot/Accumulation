@@ -7,6 +7,12 @@ import UIKit
 #endif
 
 public extension String {
+
+    /// 空白字符串
+    static let empty = ""
+
+    /// 空格
+    static let blank = " "
     
     /// url编码
     var urlEncoded: String {
@@ -59,4 +65,34 @@ public extension String {
         }
         return ranges
     }
+
+    /// 拼音
+    var phoneticAlphabet: String {
+        guard !isEmpty else {
+            return .empty
+        }
+        let origin = NSMutableString(string: self)
+        CFStringTransform(origin, nil, kCFStringTransformToLatin, false)
+        CFStringTransform(origin, nil, kCFStringTransformStripDiacritics, false)
+        return String(origin).trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: Self.blank, with: Self.empty)
+    }
+
+    /// 拼音
+    func phoneticAlphabet(_ isTrimming: Bool, isBlankRemoved: Bool) -> String {
+        guard !isEmpty else {
+            return .empty
+        }
+        let origin = NSMutableString(string: self)
+        CFStringTransform(origin, nil, kCFStringTransformToLatin, false)
+        CFStringTransform(origin, nil, kCFStringTransformStripDiacritics, false)
+        var result = String(origin)
+        if isTrimming {
+            result = result.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        if isBlankRemoved {
+            result = result.replacingOccurrences(of: Self.blank, with: Self.empty)
+        }
+        return result
+    }
+
 }

@@ -1,5 +1,3 @@
-import Foundation
-
 #if os(iOS)
 import UIKit
 
@@ -10,52 +8,52 @@ public enum QRInputCorrectionLevel: String {
 }
 
 public protocol QRImageProtocol {
-
+    
     var data: Data? { get }
-
+    
     var inputCorrectionLevel: QRInputCorrectionLevel { get }
-
+    
     var icon: UIImage? { get }
-
+    
     func filter(image: CIImage) -> CIFilter?
-
+    
     var size: CGFloat { get }
-
+    
     var interpolationQuality: CGInterpolationQuality { get }
 }
 
 public extension QRImageProtocol {
-
+    
     var inputCorrectionLevel: QRInputCorrectionLevel {
         .M
     }
-
+    
     var icon: UIImage? {
         nil
     }
-
+    
     func filter(image: CIImage) -> CIFilter? {
         nil
     }
-
+    
     var size: CGFloat {
         60
     }
-
+    
     var interpolationQuality: CGInterpolationQuality { .default }
-
+    
 }
 
 public struct QRImageStruct {
-
+    
     var content: String
-
+    
     var level: QRInputCorrectionLevel = .M
-
+    
     var iconImage: UIImage?
-
+    
     var theme: (UIColor, UIColor)?
-
+    
     var quality: CGInterpolationQuality = .default
 }
 
@@ -63,13 +61,13 @@ public extension QRImageStruct {
     var data: Data? {
         content.data(using: .utf8, allowLossyConversion: true)
     }
-
+    
     var inputCorrectionLevel: QRInputCorrectionLevel {
         level
     }
-
+    
     var icon: UIImage? { iconImage }
-
+    
     func filter(image: CIImage) -> CIFilter? {
         guard let theme = theme else {
             return nil
@@ -81,13 +79,13 @@ public extension QRImageStruct {
         filter?.setValue(theme.1.cgColor, forKey: "inputColor1")
         return filter
     }
-
+    
     var interpolationQuality: CGInterpolationQuality { quality }
 }
 
 @available(iOS 10.0, *)
 public extension UIImage {
-
+    
     /// 生成二维码
     /// - Parameter qr: 二维码协议
     /// - Returns: 图片
@@ -98,15 +96,15 @@ public extension UIImage {
         let filter = CIFilter(name: "CIQRCodeGenerator")
         filter?.setValue(data, forKey: "inputMessage")
         filter?.setValue(qr.inputCorrectionLevel.rawValue, forKey: "inputCorrectionLevel")
-
+        
         guard let image = filter?.outputImage else {
             return nil
         }
         let qrImage = UIImage(ciImage: image)
         guard let filtered = qr.filter(image: image),
               let icon = filtered.outputImage else {
-                  return qrImage.resize(qr.size)
-              }
+            return qrImage.resize(qr.size)
+        }
         let width = qr.size
         let resize = CGSize(same: width)
         let iconSize = width * 0.25
@@ -117,7 +115,7 @@ public extension UIImage {
             UIImage(ciImage: icon).draw(in: CGRect(origin: CGPoint(same: origin), size: CGSize(same: iconSize)))
         }
     }
-
+    
     /// 生成二维码
     /// - Parameters:
     ///   - data: 数据
@@ -135,7 +133,7 @@ public extension UIImage {
         }
         return UIImage(ciImage: image)
     }
-
+    
     /// 缩放图片
     /// - Parameters:
     ///   - rate: 缩放比例
@@ -148,7 +146,7 @@ public extension UIImage {
             self.draw(in: CGRect(origin: .zero, size: rate))
         }
     }
-
+    
     /// 根据大小生成图片
     /// - Parameters:
     ///   - val: 宽 = 高 = val

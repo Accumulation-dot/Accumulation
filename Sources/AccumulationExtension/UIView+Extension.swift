@@ -64,24 +64,24 @@ public extension UIView {
     /// - Parameter property: view属性
     func updateProperty(_ property: ViewPropertyEnum) {
         switch property {
-            case .backgroundColor(let value):
-                backgroundColor = value
-            case .isHidden(let value):
-                isHidden = value
-            case .alhpa(let value):
-                alpha = value
-            case .tintColor(let value):
-                tintColor = value
-            case .tintAdjustmentMode(let value):
-                tintAdjustmentMode = value
-            case .tag(let value):
-                tag = value
-            case .contentMode(let value):
-                contentMode = value
-            case .mask(let value):
-                mask = value
-            case .layoutMargins(let value):
-                layoutMargins = value
+        case .backgroundColor(let value):
+            backgroundColor = value
+        case .isHidden(let value):
+            isHidden = value
+        case .alhpa(let value):
+            alpha = value
+        case .tintColor(let value):
+            tintColor = value
+        case .tintAdjustmentMode(let value):
+            tintAdjustmentMode = value
+        case .tag(let value):
+            tag = value
+        case .contentMode(let value):
+            contentMode = value
+        case .mask(let value):
+            mask = value
+        case .layoutMargins(let value):
+            layoutMargins = value
         }
     }
 
@@ -143,44 +143,44 @@ public extension UILabel {
     /// - Parameter property: 属性
     func updateProperty(_ property: LabelPropertyEnum) {
         switch property {
-            case .text(let value):
-                text = value
-            case .textColor(let value):
-                textColor = value
-            case .font(let value):
-                font = value
-            case .attributedText(let value):
-                attributedText = value
-            case .textAlignment(let value):
-textAlignment = value
-            case .lineBreakMode(let value):
-                lineBreakMode = value
-            case .lineBreakStrategy(let value):
-                lineBreakStrategy = value
-            case .isEnabled(let value):
-                isEnabled = value
-            case .shadowColor(let value):
-                shadowColor = value
-            case .shadowOffset(let value):
-                shadowOffset = value
-            case .isUserInteractionEnabled(let value):
-                isUserInteractionEnabled = value
-            case .isHighlighted(let value):
-                isHighlighted = value
-            case .highlightedTextColor(let value):
-                highlightedTextColor = value
-            case .numberOfLines(let value):
-                numberOfLines = value
-            case .adjustsFontSizeToFitWidth(let value):
-                adjustsFontSizeToFitWidth = value
-            case .baselineAdjustment(let value):
-                baselineAdjustment = value
-            case .minimumScaleFactor(let value):
-                minimumScaleFactor = value
-            case .allowsDefaultTighteningForTruncation(let value):
-                allowsDefaultTighteningForTruncation = value
-            case .preferredMaxLayoutWidth(let value):
-                preferredMaxLayoutWidth = value
+        case .text(let value):
+            text = value
+        case .textColor(let value):
+            textColor = value
+        case .font(let value):
+            font = value
+        case .attributedText(let value):
+            attributedText = value
+        case .textAlignment(let value):
+            textAlignment = value
+        case .lineBreakMode(let value):
+            lineBreakMode = value
+        case .lineBreakStrategy(let value):
+            lineBreakStrategy = value
+        case .isEnabled(let value):
+            isEnabled = value
+        case .shadowColor(let value):
+            shadowColor = value
+        case .shadowOffset(let value):
+            shadowOffset = value
+        case .isUserInteractionEnabled(let value):
+            isUserInteractionEnabled = value
+        case .isHighlighted(let value):
+            isHighlighted = value
+        case .highlightedTextColor(let value):
+            highlightedTextColor = value
+        case .numberOfLines(let value):
+            numberOfLines = value
+        case .adjustsFontSizeToFitWidth(let value):
+            adjustsFontSizeToFitWidth = value
+        case .baselineAdjustment(let value):
+            baselineAdjustment = value
+        case .minimumScaleFactor(let value):
+            minimumScaleFactor = value
+        case .allowsDefaultTighteningForTruncation(let value):
+            allowsDefaultTighteningForTruncation = value
+        case .preferredMaxLayoutWidth(let value):
+            preferredMaxLayoutWidth = value
         }
     }
 
@@ -193,5 +193,17 @@ textAlignment = value
     }
 }
 
+/// 创建view
+public func create<T: UIView>(view config: (T) -> Void) -> T {
+    let t = T()
+    config(t)
+    return t
+}
+
+public func lineView(color: UIColor) -> UIView {
+    create { view in
+        view.backgroundColor = color
+    }
+}
 
 #endif

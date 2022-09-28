@@ -15,8 +15,10 @@ public extension URL {
         guard let components = URLComponents(url: self, resolvingAgainstBaseURL: true), let items = components.queryItems else {
             return nil
         }
-        return items.reduce(into: [String:Any]()) { result, item in
+        return items.reduce(into: [String: Any]()) { result, item in
             result[item.name] = item.value
         }
     }
+
+  
 }

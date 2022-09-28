@@ -5,17 +5,24 @@ import PackageDescription
 
 let package = Package(
     name: "Accumulation",
+    platforms: [.iOS(.v11)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "Accumulation",
             targets: ["Accumulation"]),
         .library(name: "Extension",
-                 targets: ["AccumulationExtension"])
+                 targets: ["AccumulationExtension"]),
+        .library(name: "Helper", targets: ["AccumulationHelper"]),
+        .library(name: "Authorizations", targets: ["AuthorizationsCore",
+                                                   "AuthorizationsAV",
+                                                   "AuthorizationsPH"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "git@gitee.com:bear-bro/Alamofire.git", .upToNextMajor(from: "5.6.1")),
+        .package(url: "git@gitee.com:bear-bro/Promises.git", from: "2.1.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -26,6 +33,14 @@ let package = Package(
                 "AccumulationExtension"
             ]),
         .target(name: "AccumulationExtension",
-                dependencies: [])
+                dependencies: []),
+        .target(name: "AccumulationHelper",
+                dependencies: [
+                    .product(name: "Alamofire", package: "Alamofire"),
+                    .product(name: "Promises", package: "Promises")
+                ]),
+        .target(name: "AuthorizationsAV", dependencies: ["AuthorizationsCore"]),
+        .target(name: "AuthorizationsPH", dependencies: ["AuthorizationsCore"]),
+        .target(name: "AuthorizationsCore", dependencies: ["UIKit"])
     ]
 )

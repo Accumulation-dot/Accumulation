@@ -8,7 +8,7 @@ extension ReusableProtocol {
     static var reusedIdentifier: String { "\(self)" }
 }
 
-#if !os(macOS)
+#if os(iOS)
 import UIKit
 
 // MARK: - `UITableViewHeaderFooterView`: `ReusableProtocol`

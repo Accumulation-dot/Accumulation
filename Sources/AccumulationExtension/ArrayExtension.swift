@@ -28,3 +28,13 @@ public extension Array {
         return result
     }
 }
+
+public extension Array where Element: Equatable {
+  func removeDuplicate() -> [Element] {
+    enumerated().filter { (index, value) -> Bool in
+      firstIndex(of: value) == index
+    }.map { (_, value) in
+      value
+    }
+  }
+}

@@ -47,3 +47,7 @@ public class Constants: NSObject {
 
 }
 #endif
+
+public func bound<T: Comparable>(upper: T, lower: T, current: T) -> T {
+  max(min(upper, current), lower)
+}
