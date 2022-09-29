@@ -7,6 +7,7 @@
 
 #if canImport(Photos)
 import Photos
+import AuthorizationsCore
 
 public enum Authorization {
 
@@ -75,22 +76,24 @@ extension AuthorizationManager {
                 complection(status.authorizationResult)
             }
         }
+        if #available(iOS 14.0, *) {
+            PHPhotoLibrary.requestAuthorization(for: authorization.access, handler: resultHandler)
+        } else {
+            PHPhotoLibrary.requestAuthorization(resultHandler)
+        }
+    }
+
+    /// 获取当前访问状态
+    /// - Parameter authorization: iOS14开始区分 iOS14一下为读取
+    /// - Returns: 授权结果
+    public func status(authorization: Authorization) -> AuthorizationResult {
         let status: PHAuthorizationStatus
         if #available(iOS 14.0, *) {
             status = PHPhotoLibrary.authorizationStatus(for: authorization.access)
         } else {
             status = PHPhotoLibrary.authorizationStatus()
         }
-        switch status {
-        case .notDetermined:
-            if #available(iOS 14.0, *) {
-                PHPhotoLibrary.requestAuthorization(for: authorization.access, handler: resultHandler)
-            } else {
-                PHPhotoLibrary.requestAuthorization(resultHandler)
-            }
-        default:
-            resultHandler(status)
-        }
+        return status.authorizationResult
     }
 }
 

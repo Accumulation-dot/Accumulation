@@ -41,6 +41,6 @@ let package = Package(
                 ]),
         .target(name: "AuthorizationsAV", dependencies: ["AuthorizationsCore"]),
         .target(name: "AuthorizationsPH", dependencies: ["AuthorizationsCore"]),
-        .target(name: "AuthorizationsCore", dependencies: ["UIKit"])
+        .target(name: "AuthorizationsCore", dependencies: [])
     ]
 )
