@@ -16,13 +16,17 @@ let package = Package(
         .library(name: "Helper", targets: ["AccumulationHelper"]),
         .library(name: "Authorizations", targets: ["AuthorizationsCore",
                                                    "AuthorizationsAV",
-                                                   "AuthorizationsPH"])
+                                                   "AuthorizationsPH"]),
+        .library(name: "Capture", targets: ["Capture"])
+
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
         .package(url: "git@gitee.com:bear-bro/Alamofire.git", .upToNextMajor(from: "5.6.1")),
-        .package(url: "git@gitee.com:bear-bro/Promises.git", from: "2.1.0")
+        .package(url: "git@gitee.com:bear-bro/Promises.git", from: "2.1.0"),
+        .package(url: "git@gitee.com:bear-bro/Nimble.git", .upToNextMajor(from: "9.0.0")),
+        .package(url: "git@gitee.com:bear-bro/Quick.git", .upToNextMajor(from: "4.0.0"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -41,6 +45,7 @@ let package = Package(
                 ]),
         .target(name: "AuthorizationsAV", dependencies: ["AuthorizationsCore"]),
         .target(name: "AuthorizationsPH", dependencies: ["AuthorizationsCore"]),
-        .target(name: "AuthorizationsCore", dependencies: [])
+        .target(name: "AuthorizationsCore", dependencies: []),
+        .target(name: "Capture", dependencies: ["AuthorizationsPH"])
     ]
 )
